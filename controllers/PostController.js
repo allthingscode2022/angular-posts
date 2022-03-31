@@ -109,9 +109,9 @@ router.get("/single/:id", (req, res) => {
  * @returns {object} error | json
  */
 router.post("/add", upload.single("image"), (req, res) => {
-  console.log(req.file);
   // if title does not exist on the req body do something
   if (!req.body.title) {
+    console.log('carlos', req);
     res.status(400).send({
       success: false,
       message: "title is required"
