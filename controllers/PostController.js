@@ -109,60 +109,32 @@ router.get("/single/:id", (req, res) => {
  * @returns {object} error | json
  */
 router.post("/add", upload.single("image"), (req, res) => {
-  console.log('carlos', req);
-  console.error('carlos', req);
-  // if title does not exist on the req body do something
-  if (!req.body.title) {
-    console.log('carlos', req);
-    res.status(400).send({
-      success: false,
-      message: "title is required"
-    });
-  } else {
-    // if file image does not exist on the req file do something
-    if (!req.file) {
-      res.status(400).send({
-        success: false,
-        message: "image is required"
-      });
-    } else {
-      // if body does not exist on the req body do something
-      if (!req.body.body) {
+  Post.create(
+    {
+      title: req.body.title,
+      image: req.file.Location,
+      body: req.body.body,
+      email: req.body.email,
+      creator: req.body.name
+    },
+    (err, post) => {
+      if (err) {
         res.status(400).send({
+          err,
           success: false,
-          message: "body is required"
+          message: "Post was not saved. Please try again."
         });
       } else {
-        // if we have all params create the post
-        Post.create(
-          {
-            title: req.body.title,
-            image: req.file.Location,
-            body: req.body.body,
-            email: req.body.email,
-            creator: req.body.name
-          },
-          (err, post) => {
-            if (err) {
-              res.status(400).send({
-                err,
-                success: false,
-                message: "Post was not saved. Please try again."
-              });
-            } else {
-              if (post) {
-                res.status(200).send({
-                  post,
-                  success: true,
-                  message: "Your Post saved successfully"
-                });
-              }
-            }
-          }
-        );
+        if (post) {
+          res.status(200).send({
+            post,
+            success: true,
+            message: "Your Post saved successfully"
+          });
+        }
       }
     }
-  }
+  );
 });
 
 /**
