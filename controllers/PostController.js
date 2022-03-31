@@ -109,32 +109,10 @@ router.get("/single/:id", (req, res) => {
  * @returns {object} error | json
  */
 router.post("/add", upload.single("image"), (req, res) => {
-  Post.create(
-    {
-      title: req.body.title,
-      image: req.file.filename,
-      body: req.body.body,
-      email: req.body.email,
-      creator: req.body.name
-    },
-    (err, post) => {
-      if (err) {
-        res.status(400).send({
-          err,
-          success: false,
-          message: "Post was not saved. Please try again."
-        });
-      } else {
-        if (post) {
-          res.status(200).send({
-            post,
-            success: true,
-            message: "Your Post saved successfully"
-          });
-        }
-      }
-    }
-  );
+  res.status(200).send({
+    success: true,
+    message: 'image sent to amazon'
+  })
 });
 
 /**
