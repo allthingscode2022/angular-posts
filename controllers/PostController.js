@@ -108,8 +108,33 @@ router.get("/single/:id", (req, res) => {
  * @param {string} body
  * @returns {object} error | json
  */
-router.post("/add", upload.single("image"), (req, res) => {
-  console.log('mario', req.file)
+router.post("/add", (req, res) => {
+  Post.create(
+    {
+      title: req.body.title,
+      image: 'something goes here',
+      body: req.body.body,
+      email: req.body.email,
+      creator: req.body.name
+    },
+    (err, post) => {
+      if (err) {
+        res.status(400).send({
+          err,
+          success: false,
+          message: "Post was not saved. Please try again."
+        });
+      } else {
+        if (post) {
+          res.status(200).send({
+            post,
+            success: true,
+            message: "Your Post saved successfully"
+          });
+        }
+      }
+    }
+  );
 });
 
 /**
