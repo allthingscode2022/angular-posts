@@ -112,7 +112,7 @@ router.post("/add", upload.single("image"), (req, res) => {
   Post.create(
     {
       title: req.body.title,
-      image: req.file.Location,
+      image: req.file.fieldname,
       body: req.body.body,
       email: req.body.email,
       creator: req.body.name
