@@ -109,10 +109,7 @@ router.get("/single/:id", (req, res) => {
  * @returns {object} error | json
  */
 router.post("/add", upload.single("image"), (req, res) => {
-  res.status(200).send({
-    success: true,
-    message: 'image sent to amazon'
-  })
+  console.log('mario', req.file)
 });
 
 /**
